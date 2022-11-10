@@ -218,15 +218,15 @@ helpinfo = r"""Plot Type
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('file', type=str, help='data file')
-    parser.add_argument('-t', type=int, default=1, help=helpinfo)
-    p = parser.parse_args()
+    #parser = argparse.ArgumentParser(
+    #    formatter_class=argparse.RawTextHelpFormatter)
+    #parser.add_argument('file', type=str, help='data file')
+    #parser.add_argument('-t', type=int, default=1, help=helpinfo)
+    #p = parser.parse_args()
 
-    csidata = csiread.Intel(p.file, nrxnum=3, ntxnum=3)
+    csidata = csiread.Intel('/Users/viktor/dev/csiread-forked/material/5300/dataset/sample_0x5_64_3000.dat', nrxnum=3, ntxnum=3)
     csidata.read()
-    if p.t > 10:
+    if 1 > 10:
         raise ValueError('the value of `t` can be 1 - 10')
-    func = eval('func_' + str(p.t))
+    func = eval('func_' + str(4))
     func(csidata)
