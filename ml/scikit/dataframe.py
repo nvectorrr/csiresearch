@@ -27,7 +27,7 @@ def load_test():
 
 
 def load_train():
-    [csi, data] = processing.read.extractCSI('../../datasets/data2.dat')  # path to test file
+    [csi, data] = processing.read.extractCSI('../../datasets/data2.dat')  # path to training file
     csi = processing.process.extractAm(csi)
     csi = processing.process.reshape224x1(csi)
 
@@ -37,3 +37,4 @@ def load_train():
 
     return dataframe
 
+# TODO get some more datasets (with(out) bottle)
