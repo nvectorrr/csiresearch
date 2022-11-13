@@ -1,3 +1,3 @@
 # Atheros CSI and ML
 
-for some src and binaries regards to @maksimio
+credits for some src and binaries to [@maksimio]( https://github.com/maksimio )
