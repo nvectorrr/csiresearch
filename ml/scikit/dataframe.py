@@ -3,10 +3,10 @@ import pandas as pd
 
 
 def load_dataframe():
-    train = load_csi('../../datasets/air-or-not/first/air_train_2.dat', 'train', 'air')
-    train2 = load_csi('../../datasets/air-or-not/first/pc_case_train.dat', 'train', 'case')
-    test = load_csi('../../datasets/air-or-not/first/air_test.dat', 'test', 'air')
-    test2 = load_csi('../../datasets/air-or-not/first/pc_case_test.dat', 'test', 'case')
+    train = load_csi('../../datasets/air-or-not/third/air_train.dat', 'train', 'air')
+    train2 = load_csi('../../datasets/air-or-not/third/case_train.dat', 'train', 'case')
+    test = load_csi('../../datasets/air-or-not/third/air_test.dat', 'test', 'air')
+    test2 = load_csi('../../datasets/air-or-not/third/case_test.dat', 'test', 'case')
 
     train = pd.concat([train, train2], axis=0)
     test = pd.concat([test, test2], axis=0)
