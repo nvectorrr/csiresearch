@@ -3,9 +3,9 @@ import pandas as pd
 
 
 def load_dataframe():
-    train = load_csi('../../datasets/air-or-not/air_train_2.dat', 'train', 'air')
-    test = load_csi('../../datasets/air-or-not/pc_case_test.dat', 'test', 'case')
-    test2 = load_csi('../../datasets/air-or-not/air_test.dat', 'test', 'air')
+    train = load_csi('../../datasets/air-or-not/air-or-not-first/air_train_2.dat', 'train', 'air')
+    test = load_csi('../../datasets/air-or-not/air-or-not-first/pc_case_test.dat', 'test', 'case')
+    test2 = load_csi('../../datasets/air-or-not/air-or-not-first/air_test.dat', 'test', 'air')
 
     test = pd.concat([test, test2], axis=0)
 

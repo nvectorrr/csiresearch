@@ -1,7 +1,7 @@
 import processing.process
 import matplotlib.pyplot as plt
 
-[csi, data] = processing.read.extractCSI('../datasets/data2.dat')
+[csi, data] = processing.read.extractCSI('../datasets/air-or-not/pc_case_test.dat')
 csi = processing.process.extractAm(csi)
 csi = processing.process.reshape224x1(csi)
 
