@@ -3,15 +3,18 @@ import pandas as pd
 
 
 def load_dataframe():
-    train = load_csi('../../datasets/air-or-not/air-or-not-first/air_train_2.dat', 'train', 'air')
-    test = load_csi('../../datasets/air-or-not/air-or-not-first/pc_case_test.dat', 'test', 'case')
-    test2 = load_csi('../../datasets/air-or-not/air-or-not-first/air_test.dat', 'test', 'air')
+    train = load_csi('../../datasets/air-or-not/second/air_train.dat', 'train', 'air')
+    train2 = load_csi('../../datasets/air-or-not/second/case_train.dat', 'train', 'case')
+    test = load_csi('../../datasets/air-or-not/second/air_test.dat', 'test', 'air')
+    test2 = load_csi('../../datasets/air-or-not/second/case_test.dat', 'test', 'case')
 
+    train = pd.concat([train, train2], axis=0)
     test = pd.concat([test, test2], axis=0)
 
     print(test.head())
     print(test.tail())
 
+    train = train.sample(frac=1).reset_index(drop=True)
     test = test.sample(frac=1).reset_index(drop=True)
 
     x_train = train.drop(['type', 'category'], axis=1)
