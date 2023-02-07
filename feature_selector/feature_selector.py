@@ -1,4 +1,5 @@
 # numpy and pandas for data manipulation
+import joblib
 import pandas as pd
 import numpy as np
 
@@ -15,6 +16,7 @@ import seaborn as sns
 
 # memory management
 import gc
+import os
 
 # utilities
 from itertools import chain
@@ -374,6 +376,9 @@ class FeatureSelector():
         self.feature_importances = feature_importances
         self.record_zero_importance = record_zero_importance
         self.ops['zero_importance'] = to_drop
+
+        filename = '../model/pca/pca_model.joblib'
+        joblib.dump(model, filename)
         
         print('\n%d features with zero or negative importance after one-hot encoding.\n' % len(self.ops['zero_importance']))
     

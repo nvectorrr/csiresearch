@@ -1,6 +1,7 @@
 from sklearn.ensemble import RandomForestClassifier
 from dataframe import *
 import numpy as np
+import joblib
 import time
 
 # bad seeds examples: 30, 20, 1, 10, 12, 36, 100, 80, 70, 75, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 15, 16
@@ -25,3 +26,8 @@ print()
 print("Accuracy raw: " + str(rfc_raw.score(x_test_raw, y_test_raw) * 100))
 print("Raw runtime: %s seconds" % (end_time_raw))
 print('----------------------------------\n')
+
+filename = '../model/rfc_reduced.joblib'
+joblib.dump(rfc_reduced, filename)
+filename = '../model/rfc_raw.joblib'
+joblib.dump(rfc_raw, filename)
