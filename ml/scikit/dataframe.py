@@ -4,11 +4,6 @@ import pandas as pd
 
 
 def load_dataframe_reduced():
-    #train = load_csi('../../datasets/air-or-not/fourth/40MHz/metal.dat', 'train', 'metal')
-    #train2 = load_csi('../../datasets/air-or-not/fourth/40MHz/air.dat', 'train', 'air')
-    #test = load_csi('../../datasets/air-or-not/fourth/40MHz/metal_test.dat', 'test', 'metal')
-    #test2 = load_csi('../../datasets/air-or-not/fourth/40MHz/air_test.dat', 'test', 'air')
-
     train = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_train.dat', 'train', 'metal')
     train2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_train.dat', 'train', 'air')
     test = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_test.dat', 'test', 'metal')
