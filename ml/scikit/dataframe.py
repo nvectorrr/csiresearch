@@ -23,17 +23,11 @@ def load_dataframe_reduced():
 
     fs = FeatureSelector(data=train, labels=labels)
     fs.identify_zero_importance(task='classification', eval_metric='auc',
-                            n_iterations=10, early_stopping = True)
-
-    one_hot_features = fs.one_hot_features
-    base_features = fs.base_features
-
-    print('There are %d original features' % len(base_features))
-    print('There are %d one-hot features' % len(one_hot_features))
+                            n_iterations=10, early_stopping=True)
 
     fs.identify_low_importance(cumulative_importance=0.95)
 
-    train = fs.remove(methods = {'low_importance'})
+    train = fs.remove(methods = {'zero_importance', 'low_importance'})
     removed = fs.check_removal()
     test_drop_filter = test.filter(removed)
     test.drop(test_drop_filter, inplace=True, axis=1)
