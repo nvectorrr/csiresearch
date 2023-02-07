@@ -8,14 +8,16 @@ import time
 
 np.random.seed(90)
 
-start_time = time.time()
-x_train, y_train, x_test, y_test = load_dataframe_reduced()
-rfc_reduced = RandomForestClassifier(max_depth=20).fit(x_train, y_train)
-print("Accuracy reduced: " + str(rfc_reduced.score(x_test, y_test) * 100))
-print("Reduced runtime: %s seconds" % (time.time() - start_time))
+start_time_reduced = time.time()
+x_train_reduced, y_train_reduced, x_test_reduced, y_test_reduced = load_dataframe_reduced()
+rfc_reduced = RandomForestClassifier(max_depth=20).fit(x_train_reduced, y_train_reduced)
 
-start_time = time.time()
-x_train, y_train, x_test, y_test = load_dataframe_raw()
-rfc_raw = RandomForestClassifier(max_depth=20).fit(x_train, y_train)
-print("Accuracy raw: " + str(rfc_raw.score(x_test, y_test) * 100))
-print("Raw runtime: %s seconds" % (time.time() - start_time))
+print("Accuracy reduced: " + str(rfc_reduced.score(x_test_reduced, y_test_reduced) * 100))
+print("Reduced runtime: %s seconds" % (time.time() - start_time_reduced))
+
+start_time_raw = time.time()
+x_train_raw, y_train_raw, x_test_raw, y_test_raw = load_dataframe_raw()
+rfc_raw = RandomForestClassifier(max_depth=20).fit(x_train_raw, y_train_raw)
+
+print("Accuracy raw: " + str(rfc_raw.score(x_test_raw, y_test_raw) * 100))
+print("Raw runtime: %s seconds" % (time.time() - start_time_raw))
