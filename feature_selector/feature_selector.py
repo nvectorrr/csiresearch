@@ -352,7 +352,10 @@ class FeatureSelector():
               
             else: 
                 feature_importance_values += model.feature_importances_ / n_iterations
-                
+
+            filename = '../model/pca/pca_model_' + str(i) +'.joblib'
+            joblib.dump(model, filename)
+
             # Clean up memory
             gc.enable()
             del train_features, train_labels, valid_features, valid_labels
@@ -376,12 +379,9 @@ class FeatureSelector():
         self.feature_importances = feature_importances
         self.record_zero_importance = record_zero_importance
         self.ops['zero_importance'] = to_drop
-
-        filename = '../model/pca/pca_model.joblib'
-        joblib.dump(model, filename)
         
         print('\n%d features with zero or negative importance after one-hot encoding.\n' % len(self.ops['zero_importance']))
-    
+
     def identify_low_importance(self, cumulative_importance):
         """
         Finds the lowest importance features not needed to account for `cumulative_importance` fraction
@@ -690,3 +690,46 @@ class FeatureSelector():
 
     def reset_plot(self):
         plt.rcParams = plt.rcParamsDefault
+
+    def select_feature_pretrained(self, n_iterations):
+        # One hot encoding
+        features = pd.get_dummies(self.data)
+        self.one_hot_features = [column for column in features.columns if column not in self.base_features]
+
+        # Add one hot encoded data to original data
+        self.data_all = pd.concat([features[self.one_hot_features], self.data], axis=1)
+
+        # Extract feature names
+        feature_names = list(features.columns)
+
+        # Convert to np array
+        features = np.array(features)
+        labels = np.array(self.labels).reshape((-1,))
+
+        # Empty array for feature importances
+        feature_importance_values = np.zeros(len(feature_names))
+
+        for i in range(n_iterations):
+            filename = '../model/pca/pca_model_' + str(i) + '.joblib'
+            model = joblib.load(filename)
+            model.predict(features)
+            feature_importance_values += model.feature_importances_ / n_iterations
+
+        feature_importances = pd.DataFrame({'feature': feature_names, 'importance': feature_importance_values})
+
+        # Sort features according to importance
+        feature_importances = feature_importances.sort_values('importance', ascending=False).reset_index(drop=True)
+
+        # Normalize the feature importances to add up to one
+        postive_features_sum = (feature_importances['importance'] * (feature_importances['importance'] >= 0)).sum()
+        feature_importances['normalized_importance'] = feature_importances['importance'] / postive_features_sum
+        feature_importances['cumulative_importance'] = np.cumsum(feature_importances['normalized_importance'])
+
+        # Extract the features with zero or negative importance
+        record_zero_importance = feature_importances[feature_importances['importance'] <= 0.0]
+
+        to_drop = list(record_zero_importance['feature'])
+
+        self.feature_importances = feature_importances
+        self.record_zero_importance = record_zero_importance
+        self.ops['zero_importance'] = to_drop
