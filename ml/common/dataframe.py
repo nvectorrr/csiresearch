@@ -2,6 +2,8 @@ import processing.process
 from feature_selector import FeatureSelector
 import pandas as pd
 
+from ml.common.out_of_box_pca import apply_pca
+
 
 def load_dataframe_reduced():
     train = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_train.dat', 'train', 'metal')
@@ -27,25 +29,6 @@ def load_dataframe_reduced():
     test_drop_filter = test.filter(removed)
     test.drop(test_drop_filter, inplace=True, axis=1)
 
-    y_train = train['category']
-    x_test = test.drop(['type', 'category'], axis=1)
-    y_test = test['category']
-
-    return x_train, y_train, x_test, y_test
-
-def load_dataframe_raw():
-    train = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_train.dat', 'train', 'metal')
-    train2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_train.dat', 'train', 'air')
-    test = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_test.dat', 'test', 'metal')
-    test2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_test.dat', 'test', 'air')
-
-    train = pd.concat([train, train2], axis=0)
-    test = pd.concat([test, test2], axis=0)
-
-    train = train.sample(frac=1).reset_index(drop=True)
-    test = test.sample(frac=1).reset_index(drop=True)
-
-    x_train = train.drop(['type', 'category'], axis=1)
     y_train = train['category']
     x_test = test.drop(['type', 'category'], axis=1)
     y_test = test['category']
@@ -81,6 +64,42 @@ def load_dataframe_with_pretrained_pca():
 
     return x_train, y_train, x_test, y_test
 
+def load_dataframe_raw():
+    train = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_train.dat', 'train', 'metal')
+    train2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_train.dat', 'train', 'air')
+    test = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_test.dat', 'test', 'metal')
+    test2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_test.dat', 'test', 'air')
+
+    train = pd.concat([train, train2], axis=0)
+    test = pd.concat([test, test2], axis=0)
+
+    train = train.sample(frac=1).reset_index(drop=True)
+    test = test.sample(frac=1).reset_index(drop=True)
+
+    x_train = train.drop(['type', 'category'], axis=1)
+    y_train = train['category']
+    x_test = test.drop(['type', 'category'], axis=1)
+    y_test = test['category']
+
+    return x_train, y_train, x_test, y_test
+
+def load_dataframe_with_out_of_box_pca():
+    train = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_train.dat', 'train', 'metal')
+    train2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_train.dat', 'train', 'air')
+    test = load_csi('../../datasets/air-or-not/fifth/20MHz/metal_test.dat', 'test', 'metal')
+    test2 = load_csi('../../datasets/air-or-not/fifth/20MHz/air_test.dat', 'test', 'air')
+
+    train = pd.concat([train, train2], axis=0)
+    test = pd.concat([test, test2], axis=0)
+
+    train = train.sample(frac=1).reset_index(drop=True)
+    test = test.sample(frac=1).reset_index(drop=True)
+
+    x_train, x_test = apply_pca(scaling=False, x_train=train.drop(['type', 'category'], axis=1), x_test=test.drop(['type', 'category'], axis=1))
+    y_train = train['category']
+    y_test = test['category']
+
+    return x_train, y_train, x_test, y_test
 
 def load_csi(path, type, category):
     dataframe = get_dataframe(path)
