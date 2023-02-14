@@ -1,13 +1,8 @@
 from sklearn.ensemble import RandomForestClassifier
 from ml.common.preprocessor import *
-import numpy as np
 import joblib
 import time
 
-# bad seeds examples: 30, 20, 1, 10, 12, 36, 100, 80, 70, 75, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 15, 16
-# good seeds examples: 40, 90, 76, 17
-
-#np.random.seed(76)
 
 category = 'air-or-not'
 version = 'fifth'
