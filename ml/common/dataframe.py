@@ -65,17 +65,16 @@ def load_dataframe_with_pretrained_pca():
     test = test.sample(frac=1).reset_index(drop=True)
     labels = train['category']
 
-    fs = FeatureSelector(data=train, labels=labels)
+    fs = FeatureSelector(data=train.drop(['category', 'type'], axis=1), labels=labels)
     fs.select_feature_pretrained(n_iterations=10)
 
-    fs.identify_low_importance(cumulative_importance=0.95)
+    fs.identify_low_importance(cumulative_importance=0.70)
 
-    train = fs.remove(methods={'zero_importance', 'low_importance'})
+    x_train = fs.remove(methods={'zero_importance', 'low_importance'})
     removed = fs.check_removal()
     test_drop_filter = test.filter(removed)
     test.drop(test_drop_filter, inplace=True, axis=1)
 
-    x_train = train.drop(['type', 'category', 'category_air'], axis=1)
     y_train = train['category']
     x_test = test.drop(['type', 'category'], axis=1)
     y_test = test['category']
