@@ -7,7 +7,7 @@ available_versions = ['first', 'second', 'third', 'fourth', 'fifth']
 available_bandwidth = ['20MHz', '40MHz']
 available_objects = ['air', 'case', 'bottle', 'metal', 'case']
 
-def load_train_and_test(category, version, bandwidth, object1, object2):
+def load_train_and_test(category, version, bandwidth, object1, object2, object3):
     base_path_1 = '../../datasets/'
 
     if category in available_categories:
@@ -29,6 +29,7 @@ def load_train_and_test(category, version, bandwidth, object1, object2):
         raise FileNotFoundError('Unknown bandwidth!')
 
     base_path_2 = base_path_1
+    base_path_3 = base_path_1
 
     if object1 in available_objects:
         base_path_1 += object1
@@ -40,13 +41,20 @@ def load_train_and_test(category, version, bandwidth, object1, object2):
     else:
         raise FileNotFoundError('Unknown object!')
 
+    if object3 in available_objects:
+        base_path_3 += object3
+    else:
+        raise FileNotFoundError('Unknown object!')
+
     train1 = load_csi(base_path_1 + '_train.dat', 'train', object1)
     train2 = load_csi(base_path_2 + '_train.dat', 'train', object2)
+    train3 = load_csi(base_path_3 + '_train.dat', 'train', object3)
     test1 = load_csi(base_path_1 + '_test.dat', 'test', object1)
     test2 = load_csi(base_path_2 + '_test.dat', 'test', object2)
+    test3 = load_csi(base_path_3 + '_test.dat', 'test', object3)
 
-    train = pd.concat([train1, train2], axis=0)
-    test = pd.concat([test1, test2], axis=0)
+    train = pd.concat([train1, train2, train3], axis=0)
+    test = pd.concat([test1, test2, train3], axis=0)
 
     train = train.sample(frac=1).reset_index(drop=True)
     test = test.sample(frac=1).reset_index(drop=True)
