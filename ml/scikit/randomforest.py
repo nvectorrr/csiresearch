@@ -34,7 +34,8 @@ n_features_oob_list = list()
 
 for i in range(0.1, 0.9, 0.05):
 
-    print('ATTEMPT #' + str(i))
+    print()
+    print("Importance: " + str(i))
 
     x_train_reduced, y_train_reduced, x_test_reduced, y_test_reduced, time_reduced, features_removed = load_dataframe_reduced(i, category, version, bandwidth, object1, object2, object3)
     opt_reduced += time_reduced
@@ -68,19 +69,31 @@ for i in range(0.1, 0.9, 0.05):
     n_features_reduced_list.append(features_removed)
     n_features_oob_list.append(features_removed)
 
-print('--------------------------------------------------------------------')
-print('Accuracy reduced: ' + str(accuracy_reduced))
-print('Accuracy oob: ' + str(accuracy_oob))
-print()
-print('Opt time reduced: ' + str(opt_reduced))
-print('Opt time oob: ' + str(opt_oob))
-print()
-print('Learn time reduced: ' + str(learn_reduced))
-print('Learn time oob: ' + str(learn_oob))
-print()
-print('Classification time reduced: ' + str(class_reduced))
-print('Classification time oob: ' + str(class_oob))
-print('--------------------------------------------------------------------')
+print("----------------------------- REPORT -----------------------------")
+print("list reduced: " + list_accuracy_reduced)
+print("---------------------------")
+print("list oob: " + list_accuracy_obb)
+print("---------------------------")
+print("n_features reduced:" + n_features_reduced_list)
+print("---------------------------")
+print("n_features oob:" + n_features_oob_list)
+print("---------------------------")
+print("------------------------------------------------------------------")
+
+
+# print('--------------------------------------------------------------------')
+# print('Accuracy reduced: ' + str(accuracy_reduced))
+# print('Accuracy oob: ' + str(accuracy_oob))
+# print()
+# print('Opt time reduced: ' + str(opt_reduced))
+# print('Opt time oob: ' + str(opt_oob))
+# print()
+# print('Learn time reduced: ' + str(learn_reduced))
+# print('Learn time oob: ' + str(learn_oob))
+# print()
+# print('Classification time reduced: ' + str(class_reduced))
+# print('Classification time oob: ' + str(class_oob))
+# print('--------------------------------------------------------------------')
 
 # filename = '../model/rfc_reduced.joblib'
 # joblib.dump(rfc_reduced, filename)
