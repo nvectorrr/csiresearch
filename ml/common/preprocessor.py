@@ -4,7 +4,7 @@ from ml.common.out_of_box_pca import apply_pca
 import time
 
 
-def load_dataframe_reduced(category, version, bandwidth, object1, object2, object3):
+def load_dataframe_reduced(cum_imtp, category, version, bandwidth, object1, object2, object3):
     train, test = load_train_and_test(category, version, bandwidth, object1, object2, object3)
     labels = train['category']
 

@@ -23,12 +23,20 @@ learn_oob = 0.0
 class_reduced = 0.0
 class_oob = 0.0
 
+list_accuracy_reduced = list()
+list_accuracy_obb = list()
+#list_accuracy_reduced_raw = list()
 
-for i in range(1):
+n_features_reduced_list = list()
+n_features_oob_list = list()
+#n_features_raw = list()
+
+
+for i in range(0.1, 0.9, 0.05):
 
     print('ATTEMPT #' + str(i))
 
-    x_train_reduced, y_train_reduced, x_test_reduced, y_test_reduced, time_reduced, features_removed = load_dataframe_reduced(category, version, bandwidth, object1, object2, object3)
+    x_train_reduced, y_train_reduced, x_test_reduced, y_test_reduced, time_reduced, features_removed = load_dataframe_reduced(i, category, version, bandwidth, object1, object2, object3)
     opt_reduced += time_reduced
 
     t1 = time.time()
@@ -48,12 +56,17 @@ for i in range(1):
     t4 = time.time()
     score_reduced = rfc_reduced.score(x_test_reduced, y_test_reduced) * 100
     class_reduced += ((time.time() - t4) / 30200)
+    list_accuracy_reduced.append(score_reduced)
     accuracy_reduced += score_reduced
 
     t5 = time.time()
     score_oob = rfc_oob.score(x_test_oob, y_test_oob) * 100
     class_oob += ((time.time() - t5) / 30200)
+    list_accuracy_obb.append(score_oob)
     accuracy_oob += score_oob
+
+    n_features_reduced_list.append(features_removed)
+    n_features_oob_list.append(features_removed)
 
 print('--------------------------------------------------------------------')
 print('Accuracy reduced: ' + str(accuracy_reduced))
