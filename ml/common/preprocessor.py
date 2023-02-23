@@ -13,7 +13,7 @@ def load_dataframe_reduced(cum_imtp, category, version, bandwidth, object1, obje
     fs.identify_zero_importance(task='classification', eval_metric='multi_logloss',
                             n_iterations=10, early_stopping=True)
 
-    fs.identify_low_importance(cumulative_importance=0.48)
+    fs.identify_low_importance(cumulative_importance=cum_imtp)
     opt_time = time.time() - rot
     print('Reduced opt time: ' + str(opt_time))
 
