@@ -1,5 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier
 from ml.common.preprocessor import *
+import numpy as np
 import joblib
 import time
 
@@ -31,8 +32,10 @@ n_features_reduced_list = list()
 n_features_oob_list = list()
 #n_features_raw = list()
 
+ci = np.arange(0.1, 0.9, 0.05)
 
-for i in range(0.1, 0.9, 0.05):
+
+for i in ci:
 
     print()
     print("Importance: " + str(i))
