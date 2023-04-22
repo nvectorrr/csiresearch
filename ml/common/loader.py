@@ -48,6 +48,8 @@ def load_train_and_test(category, version, bandwidth, object1, object2):
     train = pd.concat([train1, train2], axis=0)
     test = pd.concat([test1, test2], axis=0)
 
+    print(train.head())
+
     train = train.sample(frac=1).reset_index(drop=True)
     test = test.sample(frac=1).reset_index(drop=True)
 
