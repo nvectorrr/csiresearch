@@ -7,10 +7,11 @@ csi = processing.process.reshape224x1(csi)
 
 plt.figure()
 for i in range(1, 224):
-    plt.plot(range(224), csi[i], linewidth=0.3, label='power')
+    plt.plot(range(224), csi[i], linewidth=0.3)
 #plt.legend()
 
-plt.title('csi-power')
-plt.xlabel('subcarrier index')
-plt.ylabel('power')
+plt.title('Амплитудные значения CSI для различных пакетов.')
+plt.xlabel('Номер поднесущей')
+plt.ylabel('Мощность, мВт')
+plt.grid()
 plt.show()
