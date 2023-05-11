@@ -34,9 +34,18 @@ def categorize(lst: List[DirEntry], categories: List[str]) -> dict[str, List[Dir
     return catsPathes
 
 
-def extractCSI(fpath: str) -> np.ndarray:
+def extractCSI20MHz(fpath: str) -> np.ndarray:
     data = csiread.Atheros(fpath, nrxnum=2, ntxnum=5,
                            tones=56, if_report=False)
+    data.read(endian='big')
+    payload_len = np.bincount(data.payload_len).argmax()
+    csi = data.csi[(data.payload_len == payload_len)
+                   & (data.nc == 2)][:, :, :2, :2]
+    return csi, data
+
+def extractCSI40MHz(fpath: str) -> np.ndarray:
+    data = csiread.Atheros(fpath, nrxnum=2, ntxnum=5,
+                           tones=114, if_report=False)
     data.read(endian='big')
     payload_len = np.bincount(data.payload_len).argmax()
     csi = data.csi[(data.payload_len == payload_len)

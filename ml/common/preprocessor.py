@@ -63,8 +63,6 @@ def load_dataframe_combined(category, version, bandwidth, object1, object2):
     else:
         num_comp = 228
 
-    print(train.head())
-
     x_train, x_test = apply_pca_for_some_comp(scaling=False, x_train=train.drop(['type', 'category'], axis=1),
                                 x_test=test.drop(['type', 'category'], axis=1), n_comp=num_comp)
     y_train = train['category']
