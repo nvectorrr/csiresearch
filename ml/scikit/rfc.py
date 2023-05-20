@@ -46,5 +46,9 @@ print('--------------------------------------------------\n')
 
 filename = '../model/rfc_reduced.joblib'
 joblib.dump(rfc_reduced, filename)
+filename = '../model/rfc_oob.joblib'
+joblib.dump(rfc_oob, filename)
+filename = '../model/rfc_combined.joblib'
+joblib.dump(rfc_combined, filename)
 filename = '../model/rfc_raw.joblib'
 joblib.dump(rfc_raw, filename)
